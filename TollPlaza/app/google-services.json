@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "398551271487",
+    "firebase_url": "https://regnumtollplaza.firebaseio.com",
+    "project_id": "regnumtollplaza",
+    "storage_bucket": "regnumtollplaza.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:398551271487:android:567ea98f05f6beae",
+        "android_client_info": {
+          "package_name": "com.sepon.regnumtollplaza"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "398551271487-ulu826p281a5pds1ktuhegu56skt1n5p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sepon.regnumtollplaza",
+            "certificate_hash": "a4b0333a72513e937234d011b1aab94d1a110b58"
+          }
+        },
+        {
+          "client_id": "398551271487-4rvqhd389155m7n3hbprfv8gsh172bt9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6mI3ZCE12zWDgWKlG1zAg-5boDmGlB2o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "398551271487-4rvqhd389155m7n3hbprfv8gsh172bt9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

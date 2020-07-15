@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="bgBottomNavigation">#0E0D0D</color>
+    <color name="white">#fff</color>
+    <color name="black">#000</color>
+    <color name="gary">#C9C9C9</color>
+    <color name="dark_gary">#36454F</color>
+    <color name="light_gary">#CDCDCD</color>
+    <color name="cyne">#00FFFF</color>
+    <color name="magenta">#FF00FF</color>
+    <color name="green">#4C9C4E</color>
+    <color name="sky">#2196F3</color>
+    <color name="red_text">#DA161F</color>
+    <color name="White_bg">#FFFFFF</color>
+    <color name="red_bg">#E60C0C</color>
+    <color name="regular_backgroung">#F8F8F8</color>
+    <color name="graytext">#9C9C9C</color>
+    <color name="gray">#CCCCCC</color>
+    <color name="darkblue">#332683</color>
+    <color name="blue">#2F45BE</color>
+    <color name="pie1">#E95B54</color>
+    <color name="pie2">#854E9B</color>
+    <color name="pie3">#309FDB</color>
+    <color name="pie4">#3CAF85</color>
+    <color name="pie5">#FBCE4A</color>
+    <color name="pie6">#B0B91F</color>
+    <color name="pie7">#CACACA</color>
+</resources>

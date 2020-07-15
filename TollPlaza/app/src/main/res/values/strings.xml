@@ -1,0 +1,40 @@
+<resources>
+    <integer name="slide_animation_duration">300</integer>
+    <string name="app_name">Regnum Toll Plaza</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="user_name_email">User name/ Email</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_details">DetailsActivity</string>
+
+    <string name="tab_text_1">Today</string>
+    <string name="tab_text_2">Previous</string>
+    <string name="tab_text_3">Vip Pass</string>
+    <string name="tab_text_4">Graph</string>
+
+    <string name="cht0">Today</string>
+    <string name="cht1">This Week</string>
+    <string name="cht2">This Month</string>
+    <string name="title_activity_chittagong">ChittagongActivity</string>
+    <string name="_2_axel">2 Axel</string>
+
+
+    <string name="select_report">Select a Excel Report File</string>
+    <string name="open_mail">Open Your Mail</string>
+
+
+    <string name="total_vehicle">Total vehicle: </string>
+    <string name="ctrl">Ctrl+R: </string>
+    <string name="regular">Regular</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="version">2</string>
+    <string name="ChoseEmailClient">email</string>
+    <dimen name="textsize2">18sp</dimen>
+
+
+</resources>

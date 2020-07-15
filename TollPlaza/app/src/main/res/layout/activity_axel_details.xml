@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AxelDetailsActivity">
+
+
+    <LinearLayout
+        android:background="@color/darkblue"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:textAlignment="center"
+            android:text="Lan-1: 100"
+            android:textColor="@color/white"
+            android:layout_margin="5dp"
+            android:textSize="18sp"
+            android:id="@+id/lan_1"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textAlignment="center"
+            android:text="Lan-2: 100"
+            android:textColor="@color/white"
+            android:layout_margin="5dp"
+            android:textSize="18sp"
+            android:id="@+id/lan_2"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textAlignment="center"
+            android:text="Lan-3: 100"
+            android:textColor="@color/white"
+            android:layout_margin="5dp"
+            android:textSize="18sp"
+            android:id="@+id/lan_3"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textAlignment="center"
+            android:text="Lan-4: 100"
+            android:textColor="@color/white"
+            android:layout_margin="5dp"
+            android:textSize="18sp"
+            android:id="@+id/lan_4"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textAlignment="center"
+            android:text="Lan-5: 100"
+            android:textColor="@color/white"
+            android:layout_margin="5dp"
+            android:textSize="18sp"
+            android:id="@+id/lan_5"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/axel_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:divider="@null"
+        android:scrollbars="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+</LinearLayout>
