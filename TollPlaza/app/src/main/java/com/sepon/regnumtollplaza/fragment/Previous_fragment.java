@@ -56,7 +56,7 @@ public class Previous_fragment extends Fragment {
     private ArrayList<PreviousDetails> previousDetailsList;// = new ArrayList<>();
     private String thisDate, shareDate;
     private DatabaseReference databaseReference;
-    private String url = "http://103.197.206.140/api/yesterday.php";
+    private String url = "http://103.95.99.140/api/yesterday.php";
     private List<Norshinddi> todayreport;// = new ArrayList<>();
 
     private FirebaseDatabase database;
