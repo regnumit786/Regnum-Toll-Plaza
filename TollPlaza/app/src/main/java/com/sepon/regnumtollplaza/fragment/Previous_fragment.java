@@ -93,6 +93,7 @@ public class Previous_fragment extends Fragment {
                 previousDetailsList = new ArrayList<>();
                 for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
                     PreviousDetails previousDetails = singleSnapshot.getValue(PreviousDetails.class);
+                    //assert previousDetails != null;
                     Log.e("p: ", previousDetails.getDate());
                     Log.e("p: ", previousDetails.getDayTotalAmount());
                     Log.e("p: ", previousDetails.getVichelAmount());
@@ -296,10 +297,16 @@ public class Previous_fragment extends Fragment {
         grand_total = rickshaw_total+motorcycle_total+wheeler_total+microbus_total+minibus_total+agrobus_total+minitruck_total+bigbus_total+threefourwheeler_total+sedancar_total+mediumtruck_total+heavytruck_total+trailerlong_total;
 
 
-        String yesterday = getYesterday();
+        /*String yesterday = getYesterday();
+        int storePreviousTaka= grand_total;
         PreviousDetails previousDetails1 = new PreviousDetails(yesterday, total_vichel,grand_total+" tk");
         myRef.child(yesterday).setValue(previousDetails1);
         //storeDatetosharepref(thisDate);
+        getPreviousReportFromFirebase();*/
+
+        String getYesterdayDate= getYesterday();
+        PreviousDetails previousDetailsDataSetFirebase= new PreviousDetails(getYesterdayDate, total_vichel, grand_total+ " tk");
+        myRef.child(getYesterdayDate).setValue(previousDetailsDataSetFirebase);
         getPreviousReportFromFirebase();
 
     }
@@ -337,7 +344,7 @@ public class Previous_fragment extends Fragment {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);
-       String date = dateFormat.format(cal.getTime());
+        String date = dateFormat.format(cal.getTime());
 
         return date;
     }

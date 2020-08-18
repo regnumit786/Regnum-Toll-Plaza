@@ -16,7 +16,7 @@
         android:layout_margin="10dp"
         android:padding="15dp"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:background="@color/colorPrimary"
         android:layout_height="wrap_content" />
 

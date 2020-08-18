@@ -75,13 +75,13 @@ public class Today_Fragment extends Fragment {
                     dateFormat.parse(dateFormat.format(date)).before(dateFormat.parse("07:00")))
             {
                 //show yesterday data in running fund
-                String url = "http://103.197.206.140/api/yesterday.php";
+                String url = "http://103.95.99.140/api/yesterday.php";
                 Log.e("Running URL", url);
                 getDaysReport(url);
 
             }else{
                 //show today data in running fund
-                String url = "http://103.197.206.140/api/today.php";
+                String url = "http://103.95.99.140/api/today.php";
                 Log.e("Running URL", url);
                 getDaysReport(url);
             }

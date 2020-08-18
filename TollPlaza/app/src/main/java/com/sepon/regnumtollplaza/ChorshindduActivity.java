@@ -50,7 +50,7 @@ public class ChorshindduActivity extends AppCompatActivity {
     private List<Norshinddi> todayreport;
     ArrayList<Norshinddi> arrayList;
 
-    String url = "http://103.197.206.140/api/today.php";
+    String url = "http://103.95.99.140/api/today.php";
 
     @SuppressLint("WrongViewCast")
     @Override

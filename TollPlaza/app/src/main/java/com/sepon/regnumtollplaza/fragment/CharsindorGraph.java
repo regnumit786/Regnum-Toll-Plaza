@@ -59,7 +59,7 @@ public class CharsindorGraph extends Fragment {
     private BarChart charsindor_barChart;
     private AnyChartView anyChartView;
     private String getTaka;
-    private String url = "http://103.197.206.140/api/yesterday.php";
+    private String url = "http://103.95.99.140/api/yesterday.php";
     private ArrayList<Norshinddi> todayreport= new ArrayList<>();
     private ArrayList<BarEntry> setWeekValue= new ArrayList<>();
     private String[] subString;
@@ -149,9 +149,6 @@ public class CharsindorGraph extends Fragment {
     private void AnyChartSetup() {
         Pie pie= AnyChart.pie();
         List<DataEntry> entriData= new ArrayList<>();
-
-        /*int ricksha_van, motorcycle, _4wheeler, micro_bus, agro_use, mini_truck, big_bus, _3_4wheeler, sedan_car,
-        meduum_truck, heavy_turck, trailer_long, vip_pass;*/
 
         entriData.add(new ValueDataEntry("Ricksha Van", Integer.parseInt(rickshaw)));
         entriData.add(new ValueDataEntry("Motorcycle",Integer.parseInt(motorcycle)));

@@ -61,13 +61,13 @@ public class VipPass_fragment extends Fragment {
                     dateFormat.parse(dateFormat.format(date)).before(dateFormat.parse("07:00")))
             {
                 //show yesterday data in running fund
-                String url = "http://103.197.206.140/api/yesterdayvippass.php";
+                String url = "http://103.95.99.140/api/yesterdayvippass.php";
                 Log.e("Running URL", url);
                 getDaysReport(url);
 
             }else{
                 //show today data in running fund
-                String url = "http://103.197.206.140/api/vippass.php";
+                String url = "http://103.95.99.140/api/vippass.php";
                 Log.e("Running URL", url);
                 getDaysReport(url);
 
@@ -212,19 +212,19 @@ public class VipPass_fragment extends Fragment {
         int grand_total_count = rickshaw+motorcycle+wheeler+microbus+minibus+agrobus+minitruck+bigbus+threefourwheeler+sedancar+mediumtruck+heavytruck+trailerlong;
         grandtotal.setText("Total VIP Pass: "+grand_total_count);
 
-        Tali tali = new Tali("Rickshaw Van", String.valueOf(rickshaw),  "0", R.drawable.rickshaw, "0tk");
-        Tali tali1 = new Tali("MotorCycle", String.valueOf(motorcycle), "0", R.drawable.bike, "0tk");
-        Tali tali2 = new Tali("Three Four Wheeler", String.valueOf(threefourwheeler), "0" , R.drawable.threefourwheeler, "0tk");
-        Tali tali3 = new Tali("Sedan Car", String.valueOf(sedancar), "0" , R.drawable.sedan, "0tk");
-        Tali tali4 = new Tali("Four Wheeler", String.valueOf(wheeler),   "0", R.drawable.fourwheeler, "0tk");
-        Tali tali5 = new Tali("Micro Bus", String.valueOf(microbus),    "0", R.drawable.microbus, "0tk");
-        Tali tali6 = new Tali("Mini Bus", String.valueOf(minibus),  "0", R.drawable.minibus, "0tk");
-        Tali tali7 = new Tali("Agro Use", String.valueOf(agrobus), "0" , R.drawable.agro, "0tk");
-        Tali tali8 = new Tali("Mini Truck", String.valueOf(minitruck), "0" , R.drawable.axel2, "0tk");
-        Tali tali9 = new Tali("Big Bus", String.valueOf(bigbus), "0" , R.drawable.bus, "0tk");
-        Tali tali10 = new Tali("Medium Truck", String.valueOf(mediumtruck), "0" , R.drawable.mediumtruck, "0tk");
-        Tali tali11 = new Tali("Heavy Truck", String.valueOf(heavytruck), "0" , R.drawable.axel4, "0tk");
-        Tali tali12 = new Tali("Trailer Long", String.valueOf(trailerlong), "0" , R.drawable.axel6, "0tk");
+        Tali tali = new Tali("Rickshaw Van", String.valueOf(rickshaw),  "0", R.drawable.rickshaw, "5tk");
+        Tali tali1 = new Tali("MotorCycle", String.valueOf(motorcycle), "0", R.drawable.bike, "10tk");
+        Tali tali2 = new Tali("Three Four Wheeler", String.valueOf(threefourwheeler), "0" , R.drawable.threefourwheeler, "15tk");
+        Tali tali3 = new Tali("Sedan Car", String.valueOf(sedancar), "0" , R.drawable.sedan, "40tk");
+        Tali tali4 = new Tali("Four Wheeler", String.valueOf(wheeler),   "0", R.drawable.fourwheeler, "60tk");
+        Tali tali5 = new Tali("Micro Bus", String.valueOf(microbus),    "0", R.drawable.microbus, "60tk");
+        Tali tali6 = new Tali("Mini Bus", String.valueOf(minibus),  "0", R.drawable.minibus, "75tk");
+        Tali tali7 = new Tali("Agro Use", String.valueOf(agrobus), "0" , R.drawable.agro, "90tk");
+        Tali tali8 = new Tali("Mini Truck", String.valueOf(minitruck), "0" , R.drawable.axel2, "115tk");
+        Tali tali9 = new Tali("Big Bus", String.valueOf(bigbus), "0" , R.drawable.bus, "135tk");
+        Tali tali10 = new Tali("Medium Truck", String.valueOf(mediumtruck), "0" , R.drawable.mediumtruck, "150tk");
+        Tali tali11 = new Tali("Heavy Truck", String.valueOf(heavytruck), "0" , R.drawable.axel4, "300tk");
+        Tali tali12 = new Tali("Trailer Long", String.valueOf(trailerlong), "0" , R.drawable.axel6, "375tk");
 
         taliList.add(tali);
         taliList.add(tali1);
