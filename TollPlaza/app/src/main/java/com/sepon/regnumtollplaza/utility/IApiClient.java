@@ -21,7 +21,8 @@ public interface IApiClient {
         @GET(URLUtils.TODAY)
         Call<List<Norshinddi>> gettodaysreport();
 
-
+        @GET("yesterdayvippass.php")
+        Call<VipPassCount> vipPassCount();
 
 
 }

@@ -9,12 +9,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,16 +35,17 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.PieEntry;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sepon.regnumtollplaza.R;
-import com.sepon.regnumtollplaza.adapter.TodayAdapter;
 import com.sepon.regnumtollplaza.pojo.Norshinddi;
-import com.sepon.regnumtollplaza.pojo.Tali;
+import com.sepon.regnumtollplaza.utility.ApiClient;
+import com.sepon.regnumtollplaza.utility.IApiClient;
+import com.sepon.regnumtollplaza.utility.VipPassCount;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -51,10 +57,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 
 public class CharsindorGraph extends Fragment {
+    private View view;
     private String TAG= "Charsindor_Fragment";
     private BarChart charsindor_barChart;
     private AnyChartView anyChartView;
@@ -64,18 +72,29 @@ public class CharsindorGraph extends Fragment {
     private ArrayList<BarEntry> setWeekValue= new ArrayList<>();
     private String[] subString;
     private List<String> storeAllData;
+    private int total;
+    private TextView loading_Text, totalTextRickshaw, totalTextMotorcycle, totalTextFourWheeler, totalTextMicroBus, totalTextMiniBus, totalTextAgroBus, totalTextMiniTruck,
+            totalTextBigBus, totalTextTFWheeler, totalTextSeedanCar, totalTextMediumTruck, totalTextHavvyTruck, totalTextTrailerLong, totalTextVip, totalTextVehiclesCount, totalTextWithVip;
 
     private String rickshaw,motorcycle, wheeler, microbus, minibus, agrobus, minitruck,bigbus,
             threefourwheeler,sedancar,mediumtruck, heavytruck,trailerlong, vip;
 
+    private LinearLayout linearLayout_1, linearLayout_2, linearLayout_3, linearLayout_4, linearLayout_5, linearLayout_6, linearLayout_7, linearLayout_8,
+            linearLayout_9, linearLayout_10, linearLayout_11, linearLayout_12, linearLayout_13, linearLayout_14, linearLayout_15, linearLayout_16;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.month_fragment, container, false);
-        charsindor_barChart= view.findViewById(R.id.charsindor_barChart);
-        anyChartView= view.findViewById(R.id.charsindor_anyChartView);
-        storeAllData= new ArrayList<>();
+         view= inflater.inflate(R.layout.chasindor_graph_fragment, container, false);
 
+         FindAllView();
+         LayoutView();
+
+         charsindor_barChart= view.findViewById(R.id.charsindor_barChart);
+         anyChartView= view.findViewById(R.id.charsindor_anyChartView);
+         storeAllData= new ArrayList<>();
+
+        InVisiableAxel();
         getDaysReport(url);
 
         RadioGroup radioGroup = view.findViewById(R.id.charsindor_graph_view);
@@ -90,6 +109,7 @@ public class CharsindorGraph extends Fragment {
                         AnyChartSetup();
                         charsindor_barChart.setVisibility(View.GONE);
                         anyChartView.setVisibility(View.VISIBLE);
+                        VisiableAxel();
                         break;
                     case 1:
                         WeeklyBarChart();
@@ -100,6 +120,140 @@ public class CharsindorGraph extends Fragment {
             }
         });
         return view;
+    }
+
+    private void LayoutView(){
+        linearLayout_1= view.findViewById(R.id.linear_layout_1);
+        linearLayout_2= view.findViewById(R.id.linear_layout_2);
+        linearLayout_3= view.findViewById(R.id.linear_layout_3);
+        linearLayout_4= view.findViewById(R.id.linear_layout_4);
+        linearLayout_5= view.findViewById(R.id.linear_layout_5);
+        linearLayout_6= view.findViewById(R.id.linear_layout_6);
+        linearLayout_7= view.findViewById(R.id.linear_layout_7);
+        linearLayout_8= view.findViewById(R.id.linear_layout_8);
+        linearLayout_9= view.findViewById(R.id.linear_layout_9);
+        linearLayout_10= view.findViewById(R.id.linear_layout_10);
+        linearLayout_11= view.findViewById(R.id.linear_layout_11);
+        linearLayout_12= view.findViewById(R.id.linear_layout_12);
+        linearLayout_13= view.findViewById(R.id.linear_layout_13);
+        linearLayout_14= view.findViewById(R.id.linear_layout_14);
+        linearLayout_15= view.findViewById(R.id.linear_layout_15);
+        linearLayout_16= view.findViewById(R.id.linear_layout_16);
+    }
+
+    private void InVisiableAxel(){
+        loading_Text.setVisibility(View.VISIBLE);
+        linearLayout_1.setVisibility(View.GONE);
+        linearLayout_2.setVisibility(View.GONE);
+        linearLayout_3.setVisibility(View.GONE);
+        linearLayout_4.setVisibility(View.GONE);
+        linearLayout_5.setVisibility(View.GONE);
+        linearLayout_6.setVisibility(View.GONE);
+        linearLayout_7.setVisibility(View.GONE);
+        linearLayout_8.setVisibility(View.GONE);
+        linearLayout_9.setVisibility(View.GONE);
+        linearLayout_10.setVisibility(View.GONE);
+        linearLayout_11.setVisibility(View.GONE);
+        linearLayout_12.setVisibility(View.GONE);
+        linearLayout_13.setVisibility(View.GONE);
+        linearLayout_14.setVisibility(View.GONE);
+        linearLayout_15.setVisibility(View.GONE);
+        linearLayout_16.setVisibility(View.GONE);
+    }
+
+    private void VisiableAxel(){
+        loading_Text.setVisibility(View.GONE);
+        linearLayout_1.setVisibility(View.VISIBLE);
+        linearLayout_2.setVisibility(View.VISIBLE);
+        linearLayout_3.setVisibility(View.VISIBLE);
+        linearLayout_4.setVisibility(View.VISIBLE);
+        linearLayout_5.setVisibility(View.VISIBLE);
+        linearLayout_6.setVisibility(View.VISIBLE);
+        linearLayout_7.setVisibility(View.VISIBLE);
+        linearLayout_8.setVisibility(View.VISIBLE);
+        linearLayout_9.setVisibility(View.VISIBLE);
+        linearLayout_10.setVisibility(View.VISIBLE);
+        linearLayout_11.setVisibility(View.VISIBLE);
+        linearLayout_12.setVisibility(View.VISIBLE);
+        linearLayout_13.setVisibility(View.VISIBLE);
+        linearLayout_14.setVisibility(View.VISIBLE);
+        linearLayout_15.setVisibility(View.VISIBLE);
+        linearLayout_16.setVisibility(View.VISIBLE);
+    }
+
+    private void FindAllView(){
+        loading_Text= view.findViewById(R.id.loading_text);
+        totalTextRickshaw= view.findViewById(R.id.total_text_rickshaw_Van);
+        totalTextMotorcycle= view.findViewById(R.id.total_text_motorcycle);
+        totalTextFourWheeler= view.findViewById(R.id.total_text_four_wheeler);
+        totalTextMicroBus= view.findViewById(R.id.total_text_micro_bus);
+        totalTextMiniBus= view.findViewById(R.id.total_text_mini_bus);
+        totalTextAgroBus= view.findViewById(R.id.total_text_agro_bus);
+        totalTextMiniTruck= view.findViewById(R.id.total_text_mini_truck);
+        totalTextBigBus= view.findViewById(R.id.total_text_big_bus);
+        totalTextTFWheeler= view.findViewById(R.id.total_text_t_f_wheeler);
+        totalTextSeedanCar= view.findViewById(R.id.total_text_seedan_car);
+        totalTextMediumTruck= view.findViewById(R.id.total_text_midium_truck);
+        totalTextHavvyTruck= view.findViewById(R.id.total_text_havvy_truck);
+        totalTextTrailerLong= view.findViewById(R.id.total_text_trailer_long);
+        totalTextVip= view.findViewById(R.id.total_text_vip);
+        totalTextVehiclesCount= view.findViewById(R.id.total_text_vehicles_count);
+        totalTextWithVip= view.findViewById(R.id.total_text_vehicles_with_vip);
+    }
+
+    private void LoadAllAxel(){
+        totalTextRickshaw.setText(rickshaw);
+        totalTextMotorcycle.setText(motorcycle);
+        totalTextFourWheeler.setText(wheeler);
+        totalTextMicroBus.setText(microbus);
+        totalTextMiniBus.setText(minibus);
+        totalTextAgroBus.setText(agrobus);
+        totalTextMiniTruck.setText(minitruck);
+        totalTextBigBus.setText(bigbus);
+        totalTextTFWheeler.setText(threefourwheeler);
+        totalTextSeedanCar.setText(sedancar);
+        totalTextMediumTruck.setText(mediumtruck);
+        totalTextHavvyTruck.setText(heavytruck);
+        totalTextTrailerLong.setText(trailerlong);
+
+        int r= Integer.parseInt(rickshaw);
+        int m= Integer.parseInt(motorcycle);
+        int w= Integer.parseInt(wheeler);
+        int m1= Integer.parseInt(microbus);
+        int m2= Integer.parseInt(minibus);
+        int a= Integer.parseInt(agrobus);
+        int m3= Integer.parseInt(minitruck);
+        int b= Integer.parseInt(bigbus);
+        int t= Integer.parseInt(threefourwheeler);
+        int s= Integer.parseInt(sedancar);
+        int m4= Integer.parseInt(mediumtruck);
+        int h= Integer.parseInt(heavytruck);
+        int t1= Integer.parseInt(trailerlong);
+
+        total= r+m+w+m1+m2+a+m3+b+t+s+m4+h+t1;
+        totalTextVehiclesCount.setText(String.valueOf(total));
+
+        String vipUrl= "http://103.95.99.140/api/yesterdayvippass.php";
+        getVipReport(vipUrl);
+
+    }
+
+    private void getVipReport(String url) {
+        final RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new com.android.volley.Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.e("allResponseVip", String.valueOf(response.length()));
+                totalTextVip.setText(String.valueOf(" "+response.length()));
+                totalTextWithVip.setText(String.valueOf(response.length()+total));
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "VolleyError"+error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(jsonArrayRequest);
     }
 
     private void WeeklyBarChart(){
@@ -168,12 +322,12 @@ public class CharsindorGraph extends Fragment {
         pie.data(entriData);
         anyChartView.setChart(pie);
 
+        LoadAllAxel();
+
     }
 
     private void getDaysReport(String url) {
-        //   arrayList = new ArrayList<>();
         todayreport = new ArrayList<>();
-
         final RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new com.android.volley.Response.Listener<JSONArray>() {
             @Override

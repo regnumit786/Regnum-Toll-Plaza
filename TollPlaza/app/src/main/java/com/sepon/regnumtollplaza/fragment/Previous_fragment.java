@@ -345,7 +345,7 @@ public class Previous_fragment extends Fragment {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);
         String date = dateFormat.format(cal.getTime());
-
+        Log.i("Show_Data", date);
         return date;
     }
 

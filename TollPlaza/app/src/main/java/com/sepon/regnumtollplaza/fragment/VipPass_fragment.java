@@ -1,6 +1,8 @@
 package com.sepon.regnumtollplaza.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +21,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.sepon.regnumtollplaza.R;
 import com.sepon.regnumtollplaza.adapter.TodayAdapter;
 import com.sepon.regnumtollplaza.pojo.Norshinddi;
@@ -211,6 +220,13 @@ public class VipPass_fragment extends Fragment {
 
         int grand_total_count = rickshaw+motorcycle+wheeler+microbus+minibus+agrobus+minitruck+bigbus+threefourwheeler+sedancar+mediumtruck+heavytruck+trailerlong;
         grandtotal.setText("Total VIP Pass: "+grand_total_count);
+
+        /*SharedPreferences preferences= getContext().getSharedPreferences("store_vip_pass", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor= preferences.edit();
+        editor.putString("vip_data", String.valueOf(grand_total_count));
+        editor.apply();
+        editor.commit();
+        Log.i("Vip_pass_data", String.valueOf(grand_total_count));*/
 
         Tali tali = new Tali("Rickshaw Van", String.valueOf(rickshaw),  "0", R.drawable.rickshaw, "5tk");
         Tali tali1 = new Tali("MotorCycle", String.valueOf(motorcycle), "0", R.drawable.bike, "10tk");

@@ -94,7 +94,7 @@ public class Today_Fragment extends Fragment {
     private void getDaysReport(String url) {
      //   arrayList = new ArrayList<>();
         todayreport = new ArrayList<>();
-        final ProgressDialog dialog = ProgressDialog.show(getActivity(), "Getting Current Report From Server", "Please wait...", true);
+        final ProgressDialog dialog = ProgressDialog.show(getActivity(), "Getting Report From Server", "Please wait...", true);
 
         final RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new com.android.volley.Response.Listener<JSONArray>() {

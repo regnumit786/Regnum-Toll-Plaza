@@ -37,6 +37,16 @@ public class ApiClient {
     private static String apiBaseUrl = URLUtils.BASE_URL;
     private static String apiBaseUrl1 = URLUtils.BASE_URL_NEW;
 
+    /*
+
+    public static Retrofit getRetrifitClint(){
+        return new Retrofit.Builder()
+                .baseUrl("http://103.95.99.140/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
+
+    */
     public static Retrofit getClient() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder().baseUrl(apiBaseUrl)
