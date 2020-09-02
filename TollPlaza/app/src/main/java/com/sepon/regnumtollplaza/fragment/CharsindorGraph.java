@@ -74,13 +74,15 @@ public class CharsindorGraph extends Fragment {
     private List<String> storeAllData;
     private int total;
     private TextView loading_Text, totalTextRickshaw, totalTextMotorcycle, totalTextFourWheeler, totalTextMicroBus, totalTextMiniBus, totalTextAgroBus, totalTextMiniTruck,
-            totalTextBigBus, totalTextTFWheeler, totalTextSeedanCar, totalTextMediumTruck, totalTextHavvyTruck, totalTextTrailerLong, totalTextVip, totalTextVehiclesCount, totalTextWithVip;
+            totalTextBigBus, totalTextTFWheeler, totalTextSeedanCar, totalTextMediumTruck, totalTextHavvyTruck, totalTextTrailerLong, totalTextVip, totalTextVehiclesCount;
 
     private String rickshaw,motorcycle, wheeler, microbus, minibus, agrobus, minitruck,bigbus,
             threefourwheeler,sedancar,mediumtruck, heavytruck,trailerlong, vip;
 
     private LinearLayout linearLayout_1, linearLayout_2, linearLayout_3, linearLayout_4, linearLayout_5, linearLayout_6, linearLayout_7, linearLayout_8,
-            linearLayout_9, linearLayout_10, linearLayout_11, linearLayout_12, linearLayout_13, linearLayout_14, linearLayout_15, linearLayout_16;
+            linearLayout_9, linearLayout_10, linearLayout_11, linearLayout_12, linearLayout_13, linearLayout_14, linearLayout_15;
+
+    private static final String vipUrl= "http://103.95.99.140/api/yesterdayvippass.php";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -96,6 +98,7 @@ public class CharsindorGraph extends Fragment {
 
         InVisiableAxel();
         getDaysReport(url);
+        getVipReport(vipUrl);
 
         RadioGroup radioGroup = view.findViewById(R.id.charsindor_graph_view);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -138,7 +141,6 @@ public class CharsindorGraph extends Fragment {
         linearLayout_13= view.findViewById(R.id.linear_layout_13);
         linearLayout_14= view.findViewById(R.id.linear_layout_14);
         linearLayout_15= view.findViewById(R.id.linear_layout_15);
-        linearLayout_16= view.findViewById(R.id.linear_layout_16);
     }
 
     private void InVisiableAxel(){
@@ -158,7 +160,6 @@ public class CharsindorGraph extends Fragment {
         linearLayout_13.setVisibility(View.GONE);
         linearLayout_14.setVisibility(View.GONE);
         linearLayout_15.setVisibility(View.GONE);
-        linearLayout_16.setVisibility(View.GONE);
     }
 
     private void VisiableAxel(){
@@ -178,7 +179,6 @@ public class CharsindorGraph extends Fragment {
         linearLayout_13.setVisibility(View.VISIBLE);
         linearLayout_14.setVisibility(View.VISIBLE);
         linearLayout_15.setVisibility(View.VISIBLE);
-        linearLayout_16.setVisibility(View.VISIBLE);
     }
 
     private void FindAllView(){
@@ -198,7 +198,6 @@ public class CharsindorGraph extends Fragment {
         totalTextTrailerLong= view.findViewById(R.id.total_text_trailer_long);
         totalTextVip= view.findViewById(R.id.total_text_vip);
         totalTextVehiclesCount= view.findViewById(R.id.total_text_vehicles_count);
-        totalTextWithVip= view.findViewById(R.id.total_text_vehicles_with_vip);
     }
 
     private void LoadAllAxel(){
@@ -232,10 +231,6 @@ public class CharsindorGraph extends Fragment {
 
         total= r+m+w+m1+m2+a+m3+b+t+s+m4+h+t1;
         totalTextVehiclesCount.setText(String.valueOf(total));
-
-        String vipUrl= "http://103.95.99.140/api/yesterdayvippass.php";
-        getVipReport(vipUrl);
-
     }
 
     private void getVipReport(String url) {
@@ -245,7 +240,8 @@ public class CharsindorGraph extends Fragment {
             public void onResponse(JSONArray response) {
                 Log.e("allResponseVip", String.valueOf(response.length()));
                 totalTextVip.setText(String.valueOf(" "+response.length()));
-                totalTextWithVip.setText(String.valueOf(response.length()+total));
+                vip= String.valueOf(response.length());
+                Log.i("VipPAss", vip);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -318,12 +314,10 @@ public class CharsindorGraph extends Fragment {
         entriData.add(new ValueDataEntry("Heavy Truck",Integer.parseInt(heavytruck)));
         entriData.add(new ValueDataEntry("Trailer Long",Integer.parseInt(trailerlong)));
         entriData.add(new ValueDataEntry("Vip Pass",Integer.parseInt(vip)));
+        LoadAllAxel();
 
         pie.data(entriData);
         anyChartView.setChart(pie);
-
-        LoadAllAxel();
-
     }
 
     private void getDaysReport(String url) {
@@ -392,7 +386,7 @@ public class CharsindorGraph extends Fragment {
         ArrayList<Norshinddi> Medium_Truck = new ArrayList<>();
         ArrayList<Norshinddi> Heavy_Truck = new ArrayList<>();
         ArrayList<Norshinddi> Trailer_Long = new ArrayList<>();
-        ArrayList<Norshinddi> VIP = new ArrayList<>();
+        //ArrayList<Norshinddi> VIP = new ArrayList<>();
 
         Log.e("LIst :  ", String.valueOf(todayreport.size()));
         for (int i=0; i<todayreport.size();i++){
@@ -436,15 +430,11 @@ public class CharsindorGraph extends Fragment {
             }else if (todayreport.get(i).getWheeler().equals("1")){
                 Wheeler.add(todayreport.get(i));
 
-            }else {
+            }/*else {
                 VIP.add(todayreport.get(i));
                 //  Log.e("NUll ","error" );
-            }
+            }*/
         }
-
-        int rickshaw_total,motorcycle_total, wheeler_total, microbus_total, minibus_total, agrobus_total, minitruck_total, bigbus_total,
-                threefourwheeler_total,sedancar_total,mediumtruck_total,heavytruck_total,trailerlong_total, vip_total, grand_total;
-
 
         rickshaw = String.valueOf(Rickshaw_Van.size());
         motorcycle = String.valueOf(MotorCycle.size());
@@ -459,7 +449,7 @@ public class CharsindorGraph extends Fragment {
         mediumtruck = String.valueOf(Medium_Truck.size());
         heavytruck = String.valueOf(Heavy_Truck.size());
         trailerlong = String.valueOf(Trailer_Long.size());
-        vip = String.valueOf(VIP.size());
+        //vip = String.valueOf(VIP.size());
 
         Log.e("Rickshaw_Van", rickshaw);
         Log.e("MotorCycle", motorcycle);
@@ -474,7 +464,6 @@ public class CharsindorGraph extends Fragment {
         Log.e("Medium_Truck ", mediumtruck);
         Log.e("Heavy_Truck ",heavytruck);
         Log.e("Trailer_Long ", trailerlong);
-        Log.e("Vip ", vip);
-
+        //Log.e("Trailer_Long ", vip);
     }
 }

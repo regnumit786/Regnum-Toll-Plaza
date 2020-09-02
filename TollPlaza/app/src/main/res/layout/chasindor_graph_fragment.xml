@@ -474,11 +474,6 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2sp"
-                android:background="#aaa"/>
-
             <LinearLayout
                 android:id="@+id/linear_layout_14"
                 android:layout_width="match_parent"
@@ -521,56 +516,25 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10sp"
                     android:text="Vip Pass"
+                    android:textStyle="bold"
                     android:textSize="14sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/red_bg"/>
 
                 <TextView
                     android:id="@+id/total_text_vip"
                     android:layout_width="0sp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10sp"
-                    android:text="@string/app_name"
-                    android:textSize="14sp"
-                    android:textColor="@color/black"/>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2sp"
-                android:background="#aaa"/>
-
-            <LinearLayout
-                android:id="@+id/linear_layout_16"
-                android:layout_width="match_parent"
-                android:layout_height="30sp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0sp"
-                    android:layout_weight="1"
-                    android:layout_height="30sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10sp"
-                    android:text="With Vip Pass"
-                    android:textSize="14sp"
-                    android:textColor="@color/black"/>
-
-                <TextView
-                    android:id="@+id/total_text_vehicles_with_vip"
-                    android:layout_width="0sp"
-                    android:layout_weight="1"
-                    android:gravity="center"
                     android:textStyle="bold"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10sp"
                     android:text="@string/app_name"
                     android:textSize="14sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/red_bg"/>
 
             </LinearLayout>
+
+
 
         </LinearLayout>
 
