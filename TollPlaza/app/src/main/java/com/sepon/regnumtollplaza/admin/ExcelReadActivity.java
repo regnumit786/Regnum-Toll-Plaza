@@ -172,12 +172,17 @@ public class ExcelReadActivity extends BaseActivity {
                 toastMessage("No SD card found.");
             }
             else{
+                Log.d(TAG, "checkOutOfCondition");
                 file = new File(pathHistory.get(count));
                 Log.d(TAG, "checkInternalStorage: directory path: " + pathHistory.get(count));
             }
+            Log.d(TAG, "checkOutOfCondition");
             listFile = file.listFiles();
+            assert listFile != null;
             FilePathStrings = new String[listFile.length];
             FileNameStrings = new String[listFile.length];
+            Log.d(TAG, "List of file: "+listFile.length);
+
             for (int i = 0; i < listFile.length; i++) {
                 FilePathStrings[i] = listFile[i].getAbsolutePath();
                 FileNameStrings[i] = listFile[i].getName();
@@ -188,6 +193,7 @@ public class ExcelReadActivity extends BaseActivity {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, FilePathStrings);
             lvInternalStorage.setAdapter(adapter);
         }catch(NullPointerException e){
+            toastMessage(e.getMessage());
             Log.e(TAG, "checkInternalStorage: NULLPOINTEREXCEPTION " + e.getMessage());
         }
     }
@@ -452,32 +458,11 @@ public class ExcelReadActivity extends BaseActivity {
 
             }
         });
-
         dialog.show();
-
     }
 
     private void uploadRepoert() {
         showprogressdialog("Report Uploaded to server");
-
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                Log.d(TAG, "Firebase Report-1 upload thread start.....");
-//
-//                for (int i=0;i<uploadReport.size();i++){
-//                    Log.e(TAG, String.valueOf(i));
-//                    Report report = uploadReport.get(i);
-//                    myRef.child(thisDate).child("RegularReport").child(String.valueOf(i)).setValue(report);
-//                   // reportHashMap.put(String.valueOf(i), report);
-//
-//                }
-//                hiddenProgressDialog();
-//                Intent intent = new Intent(ExcelReadActivity.this, ChittagongActivity.class);
-//                startActivity(intent);
-//            }
-//        }).start();
-        //serilizeRegularData(uploadReport);
         Regular regular = serilizeRegularData(uploadReport);
         myRef.child(thisDate).child("RegularReport").setValue(regular);
 
@@ -556,26 +541,7 @@ public class ExcelReadActivity extends BaseActivity {
     }
 
     private void uploadRepoert(String previousDate) {   //previous report Upload fun
-
         showprogressdialog("Report Uploaded to server");
-
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                Log.d(TAG, "Firebase Report-1 upload thread start.....");
-//
-//                for (int i=0;i<uploadReport.size();i++){
-//                    Log.e(TAG, String.valueOf(i));
-//                    Report report = uploadReport.get(i);
-//                    myRef.child(previousDate).child("RegularReport").child(String.valueOf(i)).setValue(report);
-//                    reportHashMap.put(String.valueOf(i), report);
-//
-//                }
-//                hiddenProgressDialog();
-//                Intent intent = new Intent(ExcelReadActivity.this, ChittagongActivity.class);
-//                startActivity(intent);
-//            }
-//        }).start();
         Regular regular = serilizeRegularData(uploadReport);
         myRef.child(previousDate).child("RegularReport").setValue(regular);
 
@@ -585,7 +551,6 @@ public class ExcelReadActivity extends BaseActivity {
             myRef.child(previousDate).child("ctrlReport").child(String.valueOf(i)).setValue(report);
 
         }
-
         // this short info just for previous view
         Short s = new Short(String.valueOf(uploadData.size()), String.valueOf(ctrlRreport.size()), String.valueOf(uploadReport.size()));
         myRef.child(previousDate).child("short").setValue(s);
@@ -607,10 +572,7 @@ public class ExcelReadActivity extends BaseActivity {
                     Report report = uploadReport.get(i);
                     //myRef.child(thisDate).child("RegularReport").child(String.valueOf(i)).setValue(report);
                     firebaseFirestore.collection("Chittagong").document(thisDate).collection("regularReport").document(String.valueOf(i)).set(report);
-
-
                 }
-
             }
         }).start();
         for (int i=0;i<ctrlRreport.size();i++){

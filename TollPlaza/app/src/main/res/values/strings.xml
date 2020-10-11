@@ -36,5 +36,9 @@
     <string name="ChoseEmailClient">email</string>
     <dimen name="textsize2">18sp</dimen>
 
+    <string name="charsindur">Charsindur</string>
+    <string name="chittagong">Chittagong</string>
+    <string name="manikganj">Manikganj</string>
+
 
 </resources>

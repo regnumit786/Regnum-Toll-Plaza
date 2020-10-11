@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,52 +37,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
-    RecyclerView recyclerView;
-    private GridLayoutManager mRecyclerGridMan;
-    List<Plaza> plazalist = new ArrayList<>();
-    PlazaAdapter mPlazaAdapter;
+    LinearLayout layoutMainActivity;
     FirebaseUser currentUser;
     FirebaseAuth mAuth;
-    String studentId, thisDate;
-   // private static int mVersion = R.string.version;
+    String studentId;
     private static int mVersion = 2;
-
-    private FirebaseDatabase database;
-    private DatabaseReference databaseReference;
     TextView warningText;
-    Button openGmail;
-
-    int[] image_list= {R.drawable.charshindo_logo, R.drawable.tollview, R.drawable.chittagong_logo};
+    private Button btnCharsindur, btnChittagong, btnManikganj, openGmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FindView();
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
+        assert currentUser != null;
         studentId = currentUser.getUid();
 
+        checkVersion();
+        GoForAccessData();
+    }
+
+    private void FindView(){
+        layoutMainActivity= findViewById(R.id.layout_main_activity);
         warningText = findViewById(R.id.warning);
         openGmail = findViewById(R.id.openGmail);
-
-        recyclerView = findViewById(R.id.Plaza_recyclerview);
-        int numberOfColumns = 2;
-        mRecyclerGridMan = new GridLayoutManager(this, numberOfColumns);
-        recyclerView.setLayoutManager(mRecyclerGridMan);
-
-        generateplaza();
-
-        checkVersion();
-
-        //getinstenceID();
+        btnCharsindur= findViewById(R.id.btn_charsindur_plaza);
+        btnChittagong= findViewById(R.id.btn_chittagong_plaza);
+        btnManikganj= findViewById(R.id.btn_manikganj_plaza);
     }
 
     private void checkVersion() {
-
-        database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("version");
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference("version");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -89,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 int version = dataSnapshot.getValue(Integer.class);
                 Log.e("Version", String.valueOf(version));
                 if (mVersion != version){
-                    recyclerView.setVisibility(View.GONE);
+                    layoutMainActivity.setVisibility(View.GONE);
                     Log.e("App version", String.valueOf(mVersion));
                     warningText.setVisibility(View.VISIBLE);
                     warningText.setText("please check your Email that new Version is release... Upgrade your App!");
@@ -109,21 +99,49 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(MainActivity.this, "Database_Error: "+databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void generateplaza() {
-        Plaza plaza = new Plaza(R.drawable.charshindo_logo,"Charsindur");
-        Plaza plaza1 = new Plaza(R.drawable.charshindo_logo,"Manikganj");
-        Plaza plaza3 = new Plaza(R.drawable.charshindo_logo,"Chittagong");
-        plazalist.add(plaza);
-        plazalist.add(plaza1);
-        plazalist.add(plaza3);
-        mPlazaAdapter = new PlazaAdapter(image_list, plazalist, MainActivity.this);
-        recyclerView.setAdapter(mPlazaAdapter);
+    private void GoForAccessData(){
+        btnCharsindur.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth = FirebaseAuth.getInstance();
+                currentUser = mAuth.getCurrentUser();
+                assert currentUser != null;
+                String email = currentUser.getEmail();
 
+                assert email != null;
+                if (email.equals("usermamun@gmail.com")) { //here block the user
+                    Toast.makeText(MainActivity.this, "Sorry you are not eligible.", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Intent intent = new Intent(MainActivity.this, ChorshindduActivity.class);
+                    intent.putExtra("plazaName", "Charsindur");
+                    startActivity(intent);
+                }
+            }
+        });
+
+        btnChittagong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ChittagongActivity.class);
+                intent.putExtra("plazaName", "Chittagong");
+                startActivity(intent);
+            }
+        });
+
+        btnManikganj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ManikGong_Axel.class);
+                intent.putExtra("plazaName", "Manikganj");
+                startActivity(intent);
+            }
+        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

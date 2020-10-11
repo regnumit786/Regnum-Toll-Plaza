@@ -70,8 +70,8 @@ public class PlazaAdapter extends RecyclerView.Adapter<PlazaAdapter.PlazaViewHol
                     currentUser = mAuth.getCurrentUser();
                     String email = currentUser.getEmail();
 
-                    if (email.equals("mamuntushi@gmail.com")) { //here block the user
-                        Toast.makeText(context, "Sorry Chorshindu not Live!", Toast.LENGTH_SHORT).show();
+                    if (email.equals("usermamun@gmail.com")) { //here block the user
+                        Toast.makeText(context, "Sorry you are not eligible.", Toast.LENGTH_SHORT).show();
 
                     } else {
                         Intent intent = new Intent(context, ChorshindduActivity.class);
@@ -88,7 +88,7 @@ public class PlazaAdapter extends RecyclerView.Adapter<PlazaAdapter.PlazaViewHol
         return plazaList.size();
     }
 
-    public class PlazaViewHolder extends RecyclerView.ViewHolder {
+    public static class PlazaViewHolder extends RecyclerView.ViewHolder {
         ImageView mPlazaimage;
         ImageView circleImageView;
         TextView plazaname;

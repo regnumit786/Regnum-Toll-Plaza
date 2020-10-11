@@ -50,7 +50,6 @@ import java.util.List;
 
 
 public class Previous_fragment extends Fragment {
-
     private PreviousAdapter previousAdapter;
     private RecyclerView previousRecyclerview;
     private ArrayList<PreviousDetails> previousDetailsList;// = new ArrayList<>();
@@ -83,7 +82,6 @@ public class Previous_fragment extends Fragment {
     }
 
     private void getPreviousReportFromFirebase() {
-
       FirebaseDatabase  database = FirebaseDatabase.getInstance();
       DatabaseReference databaseReference = database.getReference("Norshinddi");
       databaseReference.addValueEventListener(new ValueEventListener() {
@@ -100,15 +98,13 @@ public class Previous_fragment extends Fragment {
                     previousDetailsList.add(previousDetails);
                 }
 
-
-                //saveArrayList(previousDetailsList, "previous");
                 previousAdapter = new PreviousAdapter(previousDetailsList, getContext());
                 previousRecyclerview.setAdapter(previousAdapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(getContext(), "Database Error: "+databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

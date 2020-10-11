@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:background="@color/gray"
-    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:textAlignment="center"
-        android:text="@string/select_report"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_margin="10dp"
-        android:padding="15dp"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:background="@color/colorPrimary"
-        android:layout_height="wrap_content" />
+        android:layout_height="40sp"
+        app:cardElevation="10sp"
+        app:cardCornerRadius="10sp"
+        android:layout_margin="5dp"
+        android:layout_marginTop="2sp">
 
+        <TextView
+            android:textAlignment="center"
+            android:text="@string/select_report"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:background="@color/colorPrimary"/>
+
+    </androidx.cardview.widget.CardView>
+
+   <!--
     <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
@@ -35,7 +46,130 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
+    -->
 
+    <LinearLayout
+        android:id="@+id/layout_main_activity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="5sp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150sp"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <LinearLayout
+                android:layout_width="0sp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingEnd="2sp"
+                android:paddingStart="0sp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/charshindo_logo"/>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="35sp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardElevation="10sp"
+                    app:cardCornerRadius="10sp"
+                    android:layout_marginTop="2sp">
+
+                    <Button
+                        android:id="@+id/btn_charsindur_plaza"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary"
+                        android:text="@string/charsindur"
+                        android:textColor="@color/white"
+                        android:textAllCaps="false"/>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0sp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:paddingStart="2sp"
+                android:paddingEnd="0sp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/chittagong_logo"/>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="35sp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardElevation="10sp"
+                    app:cardCornerRadius="10sp"
+                    android:layout_marginTop="2sp">
+
+                    <Button
+                        android:id="@+id/btn_chittagong_plaza"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/white"
+                        android:background="@color/colorPrimary"
+                        android:text="@string/chittagong"
+                        android:textAllCaps="false"/>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="220sp"
+            android:orientation="vertical"
+            android:weightSum="10"
+            android:layout_marginTop="5sp"
+            android:paddingBottom="2sp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="180sp"
+                android:scaleType="fitXY"
+                android:src="@drawable/tollview"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="35sp"
+                app:cardElevation="10sp"
+                app:cardCornerRadius="10sp"
+                android:layout_marginTop="2sp">
+
+                <Button
+                    android:id="@+id/btn_manikganj_plaza"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/white"
+                    android:background="@color/colorPrimary"
+                    android:text="@string/manikganj"
+                    android:textAllCaps="false"/>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <TextView
         android:textAlignment="center"

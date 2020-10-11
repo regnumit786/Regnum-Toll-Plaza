@@ -120,8 +120,8 @@ public class VipPass_fragment extends Fragment {
                                     j.getString("4Wheeler"));
                             todayreport.add(norshinddi);
 
-                        }catch (Exception p){
-
+                        }catch (Exception exception){
+                            Toast.makeText(getContext(), "Exception: "+exception.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                     serializeData(todayreport);
@@ -136,7 +136,7 @@ public class VipPass_fragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(getContext(), "Request Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(jsonArrayRequest);
@@ -220,6 +220,7 @@ public class VipPass_fragment extends Fragment {
 
         int grand_total_count = rickshaw+motorcycle+wheeler+microbus+minibus+agrobus+minitruck+bigbus+threefourwheeler+sedancar+mediumtruck+heavytruck+trailerlong;
         grandtotal.setText("Total VIP Pass: "+grand_total_count);
+        Log.i("Total_vip_pass", String.valueOf(grand_total_count));
 
         /*SharedPreferences preferences= getContext().getSharedPreferences("store_vip_pass", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor= preferences.edit();
