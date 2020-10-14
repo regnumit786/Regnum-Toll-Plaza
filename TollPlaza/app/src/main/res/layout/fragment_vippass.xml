@@ -1,29 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
-
-    <TextView
-        android:padding="2dp"
-        android:textAlignment="center"
-        android:id="@+id/grand_total_count"
-        android:textSize="18sp"
-        android:textColor="@color/white"
-        android:background="@color/red_bg"
+    <RadioGroup
+        android:id="@+id/rd_group_vip_pass"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="8dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/rdBtn_current"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="40dp"
+            android:background="@drawable/radio_flat_selector"
+            android:button="@android:color/transparent"
+            android:checked="true"
+            android:paddingLeft="16dp"
+            android:paddingTop="3dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="3dp"
+            android:text="Current"/>
+
+        <RadioButton
+            android:id="@+id/rdBtn_previous"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:background="@drawable/radio_flat_selector"
+            android:button="@android:color/transparent"
+            android:paddingLeft="16dp"
+            android:paddingTop="3dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="3dp"
+            android:text="Previous"/>
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/current_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="10sp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="35sp"
+            android:layout_marginStart="5sp"
+            android:layout_marginEnd="5sp"
+            app:cardElevation="10sp"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardCornerRadius="10sp">
+
+            <TextView
+                android:id="@+id/grand_total_count"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="@string/app_name"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+        </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/vipRecylerview"
+            android:id="@+id/recyclerview_current_vip"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="5sp"
             tools:ignore="MissingConstraints">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/previous_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="10sp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_previous_vip"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
 
 </LinearLayout>

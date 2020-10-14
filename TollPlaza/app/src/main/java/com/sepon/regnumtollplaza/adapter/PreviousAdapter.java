@@ -19,11 +19,11 @@ import java.util.List;
 
 public class PreviousAdapter extends RecyclerView.Adapter<PreviousAdapter.PlazaViewHolder> {
 
-    private List<PreviousDetails> pewviousList;
+    private List<PreviousDetails> previousList;
     Context context;
 
     public PreviousAdapter(List<PreviousDetails> plazaList, Context context) {
-        this.pewviousList = plazaList;
+        this.previousList = plazaList;
         this.context = context;
     }
 
@@ -38,15 +38,15 @@ public class PreviousAdapter extends RecyclerView.Adapter<PreviousAdapter.PlazaV
     @Override
     public void onBindViewHolder(@NonNull final PlazaViewHolder holder, final int position) {
 
-        holder.date.setText(pewviousList.get(position).getDate());
-        holder.taka.setText(pewviousList.get(position).getDayTotalAmount());
-        holder.amount.setText(pewviousList.get(position).getVichelAmount()+" Car");
+        holder.date.setText(previousList.get(position).getDate());
+        holder.taka.setText(previousList.get(position).getDayTotalAmount());
+        holder.amount.setText(previousList.get(position).getVichelAmount()+" Car");
 
     }
 
     @Override
     public int getItemCount() {
-        return pewviousList.size();
+        return previousList.size();
     }
 
     public class PlazaViewHolder extends RecyclerView.ViewHolder {

@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private static int mVersion = 2;
     TextView warningText;
     private Button btnCharsindur, btnChittagong, btnManikganj, openGmail;
+    private ImageView imgCharsindur, imgChittagong, imgManikganj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
         btnCharsindur= findViewById(R.id.btn_charsindur_plaza);
         btnChittagong= findViewById(R.id.btn_chittagong_plaza);
         btnManikganj= findViewById(R.id.btn_manikganj_plaza);
+        imgCharsindur= findViewById(R.id.img_charsindur_plaza);
+        imgChittagong= findViewById(R.id.img_chittagong_plaza);
+        imgManikganj= findViewById(R.id.img_manikganj_plaza);
     }
 
     private void checkVersion() {
@@ -142,6 +147,45 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        imgCharsindur.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth = FirebaseAuth.getInstance();
+                currentUser = mAuth.getCurrentUser();
+                assert currentUser != null;
+                String email = currentUser.getEmail();
+
+                assert email != null;
+                if (email.equals("usermamun@gmail.com")) { //here block the user
+                    Toast.makeText(MainActivity.this, "Sorry you are not eligible.", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Intent intent = new Intent(MainActivity.this, ChorshindduActivity.class);
+                    intent.putExtra("plazaName", "Charsindur");
+                    startActivity(intent);
+                }
+            }
+        });
+
+        imgChittagong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ChittagongActivity.class);
+                intent.putExtra("plazaName", "Chittagong");
+                startActivity(intent);
+            }
+        });
+
+        imgManikganj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ManikGong_Axel.class);
+                intent.putExtra("plazaName", "Manikganj");
+                startActivity(intent);
+            }
+        });
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

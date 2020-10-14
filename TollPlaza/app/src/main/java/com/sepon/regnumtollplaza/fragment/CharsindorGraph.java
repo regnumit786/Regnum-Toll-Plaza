@@ -56,23 +56,23 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 
 
 public class CharsindorGraph extends Fragment {
+    private DatabaseReference mDatabaseReference;
     private View view;
-    private String TAG= "Charsindor_Fragment";
     private BarChart charsindor_barChart;
     private AnyChartView anyChartView;
     private String getTaka;
-    private String url = "http://103.95.99.140/api/yesterday.php";
     private ArrayList<Norshinddi> todayreport= new ArrayList<>();
     private ArrayList<BarEntry> setWeekValue= new ArrayList<>();
     private String[] subString;
     private List<String> storeAllData;
-    private int total;
     private TextView loading_Text, totalTextRickshaw, totalTextMotorcycle, totalTextFourWheeler, totalTextMicroBus, totalTextMiniBus, totalTextAgroBus, totalTextMiniTruck,
             totalTextBigBus, totalTextTFWheeler, totalTextSeedanCar, totalTextMediumTruck, totalTextHavvyTruck, totalTextTrailerLong, totalTextVip, totalTextVehiclesCount;
 
@@ -83,20 +83,32 @@ public class CharsindorGraph extends Fragment {
             linearLayout_9, linearLayout_10, linearLayout_11, linearLayout_12, linearLayout_13, linearLayout_14, linearLayout_15;
 
     private static final String vipUrl= "http://103.95.99.140/api/yesterdayvippass.php";
+    private String yesterdayAsString;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-         view= inflater.inflate(R.layout.chasindor_graph_fragment, container, false);
 
-         FindAllView();
-         LayoutView();
+        view= inflater.inflate(R.layout.chasindor_graph_fragment, container, false);
 
-         charsindor_barChart= view.findViewById(R.id.charsindor_barChart);
-         anyChartView= view.findViewById(R.id.charsindor_anyChartView);
-         storeAllData= new ArrayList<>();
+        FindAllView();
+        LayoutView();
+
+        charsindor_barChart= view.findViewById(R.id.charsindor_barChart);
+        anyChartView= view.findViewById(R.id.charsindor_anyChartView);
+        storeAllData= new ArrayList<>();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        Date todayDate= new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(todayDate);
+        calendar.add(Calendar.DATE, -1);
+        yesterdayAsString = dateFormat.format(calendar.getTime());
+
+        mDatabaseReference= FirebaseDatabase.getInstance().getReference("PreviousVip");
 
         InVisiableAxel();
+        String url = "http://103.95.99.140/api/yesterday.php";
         getDaysReport(url);
         getVipReport(vipUrl);
 
@@ -229,18 +241,19 @@ public class CharsindorGraph extends Fragment {
         int h= Integer.parseInt(heavytruck);
         int t1= Integer.parseInt(trailerlong);
 
-        total= r+m+w+m1+m2+a+m3+b+t+s+m4+h+t1;
+        int total = r + m + w + m1 + m2 + a + m3 + b + t + s + m4 + h + t1;
         totalTextVehiclesCount.setText(String.valueOf(total));
     }
 
     private void getVipReport(String url) {
-        final RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        final RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getActivity()));
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new com.android.volley.Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 Log.e("allResponseVip", String.valueOf(response.length()));
                 totalTextVip.setText(String.valueOf(" "+response.length()));
                 vip= String.valueOf(response.length());
+                mDatabaseReference.child(yesterdayAsString).setValue(vip);
                 Log.i("VipPAss", vip);
             }
         }, new Response.ErrorListener() {
@@ -265,7 +278,7 @@ public class CharsindorGraph extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference= database.getReference();
 
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         for (int i=1; i<8; i++) {
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.DAY_OF_YEAR, -i);
@@ -289,6 +302,7 @@ public class CharsindorGraph extends Fragment {
         }
         for (int i=0; i< storeAllData.size(); i++){
             setWeekValue.add(new BarEntry((i+2),Integer.parseInt(storeAllData.get(i))));
+            String TAG = "Charsindor_Fragment";
             Log.e(TAG, "insert= "+i+1+": " +storeAllData.get(i));
         }
         Log.i("Seekcheck",String.valueOf(setWeekValue.size()));

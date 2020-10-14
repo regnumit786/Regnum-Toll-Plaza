@@ -47,7 +47,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
+import java.util.Locale;
 
 public class Previous_fragment extends Fragment {
     private PreviousAdapter previousAdapter;
@@ -70,7 +70,7 @@ public class Previous_fragment extends Fragment {
 
         previousRecyclerview = view.findViewById(R.id.previous_recyclerview);
 
-        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         Date todayDate = new Date();
         thisDate = currentDate.format(todayDate);
 
@@ -91,7 +91,7 @@ public class Previous_fragment extends Fragment {
                 previousDetailsList = new ArrayList<>();
                 for(DataSnapshot singleSnapshot : dataSnapshot.getChildren()){
                     PreviousDetails previousDetails = singleSnapshot.getValue(PreviousDetails.class);
-                    //assert previousDetails != null;
+                    assert previousDetails != null;
                     Log.e("p: ", previousDetails.getDate());
                     Log.e("p: ", previousDetails.getDayTotalAmount());
                     Log.e("p: ", previousDetails.getVichelAmount());

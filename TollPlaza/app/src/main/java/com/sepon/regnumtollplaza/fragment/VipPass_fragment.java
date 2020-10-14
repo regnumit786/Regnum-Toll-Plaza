@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,9 +27,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.sepon.regnumtollplaza.R;
+import com.sepon.regnumtollplaza.adapter.PreviousVipPassAdapter;
 import com.sepon.regnumtollplaza.adapter.TodayAdapter;
 import com.sepon.regnumtollplaza.pojo.Norshinddi;
 import com.sepon.regnumtollplaza.pojo.Tali;
@@ -35,32 +41,39 @@ import com.sepon.regnumtollplaza.pojo.Tali;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
-
+import lecho.lib.hellocharts.model.Line;
 public class VipPass_fragment extends Fragment {
-
     private List<Tali> taliList = new ArrayList<>();
-    private RecyclerView recyclerView;
+    private RecyclerView currentRecyclerView, previousRecyclerView;
     private TextView grandtotal;
     private List<Norshinddi> todayreport;
+    private LinearLayout currentLayout, previousLayout;
+    private View view;
+    private String yesterdayAsString, vipDate, vipValue;
+    private PreviousVipPassAdapter previousVipPassAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_vippass, container, false);
+        view = inflater.inflate(R.layout.fragment_vippass, container, false);
 
-        recyclerView= view.findViewById(R.id.vipRecylerview);
-        grandtotal= view.findViewById(R.id.grand_total_count);
-
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        FindView();
+        currentRecyclerView.setHasFixedSize(true);
+        currentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        previousRecyclerView.setHasFixedSize(true);
+        previousRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("kk:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("kk:mm", Locale.getDefault());
         dateFormat.format(date);
 
         Log.e("Time====", dateFormat.format(date));
@@ -84,7 +97,69 @@ public class VipPass_fragment extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        SetPreviousVipPass();
+
+        RadioGroup radioGroup = view.findViewById(R.id.rd_group_vip_pass);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                View radioButton = radioGroup.findViewById(checkedId);
+                int index = radioGroup.indexOfChild(radioButton);
+                switch (index){
+                    case 0:
+                        previousLayout.setVisibility(View.GONE);
+                        currentLayout.setVisibility(View.VISIBLE);
+                        break;
+                    case 1:
+                        currentLayout.setVisibility(View.GONE);
+                        previousLayout.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+        });
+
         return view;
+    }
+
+    private void FindView(){
+        currentRecyclerView= view.findViewById(R.id.recyclerview_current_vip);
+        previousRecyclerView= view.findViewById(R.id.recyclerview_previous_vip);
+        grandtotal= view.findViewById(R.id.grand_total_count);
+        currentLayout= view.findViewById(R.id.current_layout);
+        previousLayout= view.findViewById(R.id.previous_layout);
+    }
+
+    private void SetPreviousVipPass(){
+        FirebaseDatabase firebaseDatabase= FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference= firebaseDatabase.getReference();
+
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+
+        for (int i=1; i<4; i++){
+            Date todayDate= new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(todayDate);
+            calendar.add(Calendar.DATE, -i);
+            yesterdayAsString = dateFormat.format(calendar.getTime());
+            Log.e("VipPreviousData", "date is: "+yesterdayAsString);
+
+            databaseReference.child("Norshinddi").child("PreviousVip").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                   vipValue= Objects.requireNonNull(snapshot.child(yesterdayAsString).getValue()).toString();
+                   Log.i("VipPassValue", vipValue);
+                   previousVipPassAdapter= new PreviousVipPassAdapter(getContext(),yesterdayAsString, vipValue);
+                   previousRecyclerView.setAdapter(previousVipPassAdapter);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(getContext(), "Previous Vip Pass Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.i("Previous_Vip_Pass_Error", error.getMessage());
+                }
+            });
+        }
     }
 
     private void getDaysReport(String url) {
@@ -257,10 +332,10 @@ public class VipPass_fragment extends Fragment {
         taliList.add(tali11);
         taliList.add(tali12);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setHasFixedSize(true);
+        currentRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        currentRecyclerView.setHasFixedSize(true);
         TodayAdapter taliAdapter = new TodayAdapter(taliList, getActivity());
-        recyclerView.setAdapter(taliAdapter);
+        currentRecyclerView.setAdapter(taliAdapter);
 
         dialog.dismiss();
     }

@@ -71,6 +71,7 @@
                 android:paddingStart="0sp">
 
                 <ImageView
+                    android:id="@+id/img_charsindur_plaza"
                     android:layout_width="match_parent"
                     android:layout_height="110dp"
                     android:scaleType="fitXY"
@@ -107,6 +108,7 @@
                 android:paddingEnd="0sp">
 
                 <ImageView
+                    android:id="@+id/img_chittagong_plaza"
                     android:layout_width="match_parent"
                     android:layout_height="110dp"
                     android:scaleType="fitXY"
@@ -144,6 +146,7 @@
             android:paddingBottom="2sp">
 
             <ImageView
+                android:id="@+id/img_manikganj_plaza"
                 android:layout_width="match_parent"
                 android:layout_height="180sp"
                 android:scaleType="fitXY"

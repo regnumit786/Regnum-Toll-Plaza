@@ -46,8 +46,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-
+import java.util.Locale;
 public class Today_Fragment extends Fragment {
     private BroadcastReceiver MyReceiver = null;
     private List<Tali> taliList = new ArrayList<>();
@@ -65,7 +64,7 @@ public class Today_Fragment extends Fragment {
         MyReceiver = new MyReceiver();
 
         Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("kk:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("kk:mm", Locale.getDefault());
         dateFormat.format(date);
 
         Log.e("Time====", dateFormat.format(date));
@@ -142,7 +141,8 @@ public class Today_Fragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(getContext(), "Response Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.i("Response_Error: ", error.getMessage());
             }
         });
         requestQueue.add(jsonArrayRequest);

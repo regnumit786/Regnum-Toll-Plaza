@@ -57,6 +57,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 public class ExcelReadActivity extends BaseActivity {
 
@@ -105,7 +106,7 @@ public class ExcelReadActivity extends BaseActivity {
         currentUser = mAuth.getCurrentUser();
         studentId = currentUser.getUid();
 
-        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         Date todayDate = new Date();
         thisDate = currentDate.format(todayDate);
 
